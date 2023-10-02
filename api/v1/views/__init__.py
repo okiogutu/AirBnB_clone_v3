@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-''blueprint for the API.'''
+'''blueprint for the API.'''
 from flask import Blueprint
 
 
