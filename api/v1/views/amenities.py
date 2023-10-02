@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''amenities view for the API.'''
+'''Contains the amenities view for the API.'''
 from flask import jsonify, request
 from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
 
@@ -9,13 +9,14 @@ from models.amenity import Amenity
 
 
 ALLOWED_METHODS = ['GET', 'DELETE', 'POST', 'PUT']
-'''Methods allowed'''
+'''Methods allowed for the amenities endpoint.'''
 
 
 @app_views.route('/amenities', methods=ALLOWED_METHODS)
 @app_views.route('/amenities/<amenity_id>', methods=ALLOWED_METHODS)
 def handle_amenities(amenity_id=None):
-    '''The method handler for amenities '''
+    '''The method handler for the amenities endpoint.
+    '''
     handlers = {
         'GET': get_amenities,
         'DELETE': remove_amenity,
@@ -29,7 +30,8 @@ def handle_amenities(amenity_id=None):
 
 
 def get_amenities(amenity_id=None):
-    '''Gets the amenity with the id '''
+    '''Gets the amenity with the given id or all amenities.
+    '''
     all_amenities = storage.all(Amenity).values()
     if amenity_id:
         res = list(filter(lambda x: x.id == amenity_id, all_amenities))
@@ -41,7 +43,8 @@ def get_amenities(amenity_id=None):
 
 
 def remove_amenity(amenity_id=None):
-    '''Removes a amenity with id'''
+    '''Removes a amenity with the given id.
+    '''
     all_amenities = storage.all(Amenity).values()
     res = list(filter(lambda x: x.id == amenity_id, all_amenities))
     if res:
@@ -52,7 +55,8 @@ def remove_amenity(amenity_id=None):
 
 
 def add_amenity(amenity_id=None):
-    '''Adds a new amenity '''
+    '''Adds a new amenity.
+    '''
     data = request.get_json()
     if type(data) is not dict:
         raise BadRequest(description='Not a JSON')
@@ -64,7 +68,8 @@ def add_amenity(amenity_id=None):
 
 
 def update_amenity(amenity_id=None):
-    '''Updates the amenity with id '''
+    '''Updates the amenity with the given id.
+    '''
     xkeys = ('id', 'created_at', 'updated_at')
     all_amenities = storage.all(Amenity).values()
     res = list(filter(lambda x: x.id == amenity_id, all_amenities))
