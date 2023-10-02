@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''cities view for the API.'''
+'''Contains the cities view for the API.'''
 from flask import jsonify, request
 from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
 
@@ -14,7 +14,8 @@ from models.state import State
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
 def handle_cities(state_id=None, city_id=None):
-    '''The method handler for cities '''
+    '''The method handler for the cities endpoint.
+    '''
     handlers = {
         'GET': get_cities,
         'DELETE': remove_city,
@@ -28,7 +29,9 @@ def handle_cities(state_id=None, city_id=None):
 
 
 def get_cities(state_id=None, city_id=None):
-    '''Gets the city with id '''
+    '''Gets the city with the given id or all cities in
+    the state with the given id.
+    '''
     if state_id:
         state = storage.get(State, state_id)
         if state:
@@ -42,7 +45,8 @@ def get_cities(state_id=None, city_id=None):
 
 
 def remove_city(state_id=None, city_id=None):
-    '''Removes a city with id. '''
+    '''Removes a city with the given id.
+    '''
     if city_id:
         city = storage.get(City, city_id)
         if city:
@@ -60,7 +64,8 @@ def remove_city(state_id=None, city_id=None):
 
 
 def add_city(state_id=None, city_id=None):
-    '''Adds a new city '''
+    '''Adds a new city.
+    '''
     state = storage.get(State, state_id)
     if not state:
         raise NotFound()
@@ -76,7 +81,8 @@ def add_city(state_id=None, city_id=None):
 
 
 def update_city(state_id=None, city_id=None):
-    '''Updates the city with id '''
+    '''Updates the city with the given id.
+    '''
     xkeys = ('id', 'state_id', 'created_at', 'updated_at')
     if city_id:
         city = storage.get(City, city_id)
