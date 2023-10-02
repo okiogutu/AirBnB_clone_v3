@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-'''Places_reviews view for the API'''
+'''Places_reviews view for the API.'''
 from flask import jsonify, request
 from werkzeug.exceptions import NotFound, MethodNotAllowed, BadRequest
 
@@ -13,7 +13,7 @@ from models.user import User
 @app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'])
 @app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE', 'PUT'])
 def handle_reviews(place_id=None, review_id=None):
-    '''Method handler for the reviews'''
+    '''The method handler for the reviews '''
     handlers = {
         'GET': get_reviews,
         'DELETE': remove_review,
@@ -27,7 +27,7 @@ def handle_reviews(place_id=None, review_id=None):
 
 
 def get_reviews(place_id=None, review_id=None):
-    '''gets reviews by id'''
+    '''Gets the review with the given id  '''
     if place_id:
         place = storage.get(Place, place_id)
         if place:
@@ -43,7 +43,7 @@ def get_reviews(place_id=None, review_id=None):
 
 
 def remove_review(place_id=None, review_id=None):
-    '''deletes the review by id'''
+    '''Removes a review with the given id '''
     review = storage.get(Review, review_id)
     if review:
         storage.delete(review)
@@ -53,7 +53,7 @@ def remove_review(place_id=None, review_id=None):
 
 
 def add_review(place_id=None, review_id=None):
-    '''creates a new review'''
+    '''Adds a new review '''
     place = storage.get(Place, place_id)
     if not place:
         raise NotFound()
@@ -74,7 +74,7 @@ def add_review(place_id=None, review_id=None):
 
 
 def update_review(place_id=None, review_id=None):
-    '''updates the review by the id'''
+    '''Updates the review with id. '''
     xkeys = ('id', 'user_id', 'place_id', 'created_at', 'updated_at')
     if review_id:
         review = storage.get(Review, review_id)
